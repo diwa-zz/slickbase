@@ -1,0 +1,8 @@
+alias c=compile
+alias tc=test:compile
+alias t=test
+alias to=test-only
+alias tq=testQuick
+alias cct=;clean ;compile ;test
+alias q=exit
+alias u=update
