@@ -4,6 +4,8 @@ organization := "in.diwa"
 
 version := "0.1.0-SNAPSHOT"
 
+licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php"))
+
 homepage := Some(url("https://github.com/diwa/slickbase"))
 
 startYear := Some(2013)
@@ -40,7 +42,7 @@ javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 
 libraryDependencies ++= Seq (
   "com.typesafe.slick" %% "slick" % "2.0.0-M2",
-  "com.h2database" % "h2" % "1.3.166",
+  "com.h2database" % "h2" % "1.3.166" % "test",
   "org.specs2" %% "specs2" % "2.2.3" % "test",
   "ch.qos.logback" % "logback-classic" % "1.0.13"
   )
@@ -51,9 +53,7 @@ resolvers ++= Seq(
  "Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
   )
 
-assemblySettings
-
-test in AssemblyKeys.assembly := {}
+releaseSettings
 
 atmosSettings
 
@@ -69,10 +69,10 @@ publishMavenStyle := true
 
 publishTo <<= version { (v: String) =>
   val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT")) Some(
-    "snapshots" at nexus + "content/repositories/snapshots"
-  )
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+  if (v.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
 mappings in (Compile, packageBin) ~= { (ms: Seq[(File, String)]) =>
@@ -82,10 +82,6 @@ mappings in (Compile, packageBin) ~= { (ms: Seq[(File, String)]) =>
 }
 
 publishArtifact in Test := false
-
-// publishArtifact in (Compile, packageDoc) := false
-
-// publishArtifact in (Compile, packageSrc) := false
 
 pomIncludeRepository := { _ => false }
 
@@ -100,4 +96,3 @@ pomExtra := (
 )
 
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
-
