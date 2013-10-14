@@ -95,7 +95,9 @@ pomExtra := (
       <id>diwa</id>
       <name>Diwa Laksh</name>
       <email>diwalak@gmail.com</email>
-//    <url>http://johndoe.com</url>
     </developer>
   </developers>
 )
+
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+
