@@ -41,13 +41,14 @@ javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 libraryDependencies ++= Seq (
   "com.typesafe.slick" %% "slick" % "2.0.0-M2",
   "com.h2database" % "h2" % "1.3.166",
-  "org.scalatest" %% "scalatest" % "2.0.RC1" % "test",
+  "org.specs2" %% "specs2" % "2.2.3" % "test",
   "ch.qos.logback" % "logback-classic" % "1.0.13"
   )
 
 resolvers ++= Seq(
   // Resolver.sonatypeRepo("snapshots")
   // Resolver.typesafeRepo("releases")
+ "Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
   )
 
 assemblySettings

@@ -8,7 +8,7 @@ object ApplicationBuild extends Build {
   val appVersion      = "1.0-SNAPSHOT"
 
   val appDependencies = Seq(
-    jdbc      // The JDBC connection pool and the play.api.db API
+    jdbc     // The JDBC connection pool and the play.api.db API,
   )
 
   val slickbase = RootProject(file("../../"))
