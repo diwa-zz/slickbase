@@ -30,7 +30,7 @@ scalacOptions ++= Seq(
   "-Ywarn-dead-code",
   "-Ywarn-inaccessible",
   "-Ywarn-nullary-override",
-  " -Ywarn-nullary-unit",
+  "-Ywarn-nullary-unit",
   "-Yclosure-elim",
   "-Yinline",
   "-Xlint"
