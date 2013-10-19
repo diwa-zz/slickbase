@@ -1,3 +1,6 @@
+import scalariform.formatter.preferences._
+import org.scalastyle.sbt.ScalastylePlugin
+
 name := "slickbase"
 
 organization := "in.diwa"
@@ -41,43 +44,46 @@ scalacOptions ++= Seq(
 javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 
 libraryDependencies ++= Seq (
-  "com.typesafe.slick" %% "slick" % "2.0.0-M2",
-  "com.h2database" % "h2" % "1.3.166" % "test",
-  "org.specs2" %% "specs2" % "2.2.3" % "test"
+  "com.typesafe.slick"  %% "slick"        % "2.0.0-M2",
+  "org.scalatest"       %% "scalatest"    % "2.0.RC2"   % "test",
+  "com.h2database"      % "h2"            % "1.3.173"   % "test",
+  "org.mockito"         % "mockito-core"  % "1.9.5"     % "test"
   )
 
 resolvers ++= Seq(
-  // Resolver.sonatypeRepo("snapshots")
-  // Resolver.typesafeRepo("releases")
  "Sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-  )
+ )
 
 releaseSettings
 
 atmosSettings
 
-/* sbt behavior */
+defaultScalariformSettings
+
+ScalariformKeys.preferences := ScalariformKeys.preferences.value
+.setPreference(AlignParameters, true)
+.setPreference(AlignSingleLineCaseStatements, true)
+.setPreference(DoubleIndentClassDeclaration, true)
+.setPreference(PreserveDanglingCloseParenthesis, true)
+
 logLevel in compile := Level.Warn
 
 traceLevel := 5
 
 offline := false
 
-/* publishing */
 publishMavenStyle := true
 
-publishTo <<= version { (v: String) =>
+publishTo := {
   val nexus = "https://oss.sonatype.org/"
-  if (v.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at nexus + "content/repositories/snapshots")
+  if (version.value.trim.endsWith("SNAPSHOT"))
+  Some("snapshots" at nexus + "content/repositories/snapshots")
   else
-    Some("releases" at nexus + "service/local/staging/deploy/maven2")
+  Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
 mappings in (Compile, packageBin) ~= { (ms: Seq[(File, String)]) =>
-  ms filter { case (file, toPath) =>
-      toPath != "application.conf"
-  }
+  ms filter { case (file, toPath) => toPath != "application.conf" }
 }
 
 publishArtifact in Test := false
@@ -92,4 +98,10 @@ pomExtra := (
       <email>diwalak@gmail.com</email>
     </developer>
   </developers>
-)
+  )
+
+ScalastylePlugin.Settings
+
+val gc = taskKey[Unit]("Runs garbage collector")
+
+gc := System gc()

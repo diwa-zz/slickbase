@@ -12,8 +12,6 @@ object ApplicationBuild extends Build {
      "in.diwa" %% "slickbase" % "0.1.0-SNAPSHOT"
   )
 
-  //val slickbase = RootProject(file("../../"))
   val main = play.Project(appName, appVersion, appDependencies).settings(
   )
-
 }
